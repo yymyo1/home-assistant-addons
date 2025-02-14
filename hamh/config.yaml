@@ -22,6 +22,6 @@ options:
   disable_log_colors: false
   mdns_network_interface: ""
 schema:
-  app_log_level: list(silly|debug|info|warn|error)
+  app_log_level: list(silly|debug|info|notice|warn|error|fatal)
   disable_log_colors: bool
   mdns_network_interface: "str?"
