@@ -12,7 +12,7 @@ on:
 #   version: "3.0.0-alpha.33"
 
 env:
-  repo_url: https://raw.githubusercontent.com/yymyo1/home-assistant-matter-hub/tree/climate_supports_onoff
+  repo_url: https://raw.githubusercontent.com/yymyo1/home-assistant-matter-hub
   repo_changelog: CHANGELOG.md
   changelog_file: hamh/CHANGELOG.md
   config_file: hamh/config.yaml
