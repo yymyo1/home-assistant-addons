@@ -1,0 +1,46 @@
+name: Release ECHONETLite2MQTT
+on:
+  repository_dispatch:
+    event_name: release-echonetlite2mqtt-addon
+  workflow_dispatch:
+    inputs:
+      version:
+        type: string
+        description: The release version of ECHONETLite2MQTT
+        required: true
+# client_payload:
+#   version: "3.4.0"
+
+env:
+  config_file: echonetlite2mqtt/config.yaml
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get Version
+        id: event_parser
+        run: |
+          if [ -n "${{ github.event.client_payload.version }}" ]; then
+            echo "version=${{ github.event.client_payload.version }}" >> "$GITHUB_OUTPUT"
+          elif [ -n "${{ github.event.inputs.version }}" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            exit 1
+          fi
+      - run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Apply release version
+        run: |
+          yq -i ".version = \"${{ steps.event_parser.outputs.version }}\"" ${{ env.config_file }}
+          git add ${{ env.config_file }}
+      - name: Publish
+        run: |
+          git commit -m "bumb(echonetlite2mqtt): bumb to version ${{ steps.event_parser.outputs.version }}"
+          git push origin main
