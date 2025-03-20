@@ -1,6 +1,6 @@
 name: "ECHONETLite2MQTT"
 description: "ECHONET Lite to MQTT bridge."
-version: "dev"
+version: "3.4.0"
 slug: "echonetlite2mqtt"
 arch:
   - aarch64
